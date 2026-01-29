@@ -7,7 +7,7 @@ import { TodoList } from './components/TodoList';
 import { TodoFilter } from './components/TodoFilter';
 import { TodoModal } from './components/TodoModal';
 import { Loader } from './components/Loader';
-import { activeTodos, completedTodos, getTodos, getUser } from './api';
+import { activeTodos, completedTodos, getTodos } from './api';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = React.useState([]);
@@ -65,7 +65,11 @@ export const App: React.FC = () => {
               {isLoading ? (
                 <Loader />
               ) : (
-                <TodoList postId={postId} todos={filteredTodos} setPostId={setPostId} />
+                <TodoList
+                  postId={postId}
+                  todos={filteredTodos}
+                  setPostId={setPostId}
+                />
               )}
             </div>
           </div>

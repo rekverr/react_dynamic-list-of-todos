@@ -24,7 +24,7 @@ export const TodoList: React.FC<{
     <tbody>
       {todos.length > 0 &&
         todos.map(todo => (
-          <tr data-cy="todo" className="">
+          <tr key={todo.id} data-cy="todo" className="">
             <td className="is-vcentered">{todo.id}</td>
             <td className="is-vcentered">
               {todo.completed && (
@@ -48,7 +48,9 @@ export const TodoList: React.FC<{
                 onClick={() => setPostId(todo.id)}
               >
                 <span className="icon">
-                  <i className={`far ${postId === todo.id ? 'fa-eye-slash' : 'fa-eye'}`} />
+                  <i
+                    className={`far ${postId === todo.id ? 'fa-eye-slash' : 'fa-eye'}`}
+                  />
                 </span>
               </button>
             </td>

@@ -19,8 +19,8 @@ export const TodoModal: React.FC<{
       setModalLoading(true);
       getUser(currentTodo.userId)
         .then(setUser)
-        .catch(error => {
-          console.error('Error loading user:', error);
+        .catch(() => {
+          // Error loading user
         })
         .finally(() => {
           setModalLoading(false);
@@ -67,9 +67,7 @@ export const TodoModal: React.FC<{
 
               {' by '}
 
-              {user && (
-                <a href={`mailto:${user.email}`}>{user.name}</a>
-              )}
+              {user && <a href={`mailto:${user.email}`}>{user.name}</a>}
             </p>
           </div>
         </div>
