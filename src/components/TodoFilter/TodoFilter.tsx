@@ -10,7 +10,9 @@ export const TodoFilter: React.FC<{
       <span className="select">
         <select
           data-cy="statusSelect"
-          onChange={e => setStatus(e.target.value)}
+          onChange={e =>
+            setStatus(e.target.value as 'all' | 'active' | 'completed')
+          }
         >
           <option value="all">All</option>
           <option value="active">Active</option>

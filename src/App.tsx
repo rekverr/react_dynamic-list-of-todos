@@ -14,7 +14,7 @@ export const App: React.FC = () => {
   const [todos, setTodos] = React.useState<Todo[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [query, setQuery] = React.useState('');
-  const [status, setStatus] = React.useState('All');
+  const [status, setStatus] = React.useState('all');
   const [postId, setPostId] = React.useState<number | null>(null);
 
   useEffect(() => {
