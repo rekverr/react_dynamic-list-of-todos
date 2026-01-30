@@ -7,10 +7,11 @@ import { TodoList } from './components/TodoList';
 import { TodoFilter } from './components/TodoFilter';
 import { TodoModal } from './components/TodoModal';
 import { Loader } from './components/Loader';
-import { activeTodos, completedTodos, getTodos } from './api';
+import { getTodos } from './api';
+import { Todo } from './types/Todo';
 
 export const App: React.FC = () => {
-  const [todos, setTodos] = React.useState([]);
+  const [todos, setTodos] = React.useState<Todo[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [status, setStatus] = React.useState('All');
@@ -18,31 +19,25 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    getTodos()
+      .then(todosFromServer => {
+        setTodos(todosFromServer);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (status === 'active') {
-      activeTodos()
-        .then(todosFromServer => {
-          setTodos(todosFromServer);
-        })
-        .finally(() => setIsLoading(false));
-    } else if (status === 'completed') {
-      completedTodos()
-        .then(todosFromServer => {
-          setTodos(todosFromServer);
-        })
-        .finally(() => setIsLoading(false));
-    } else {
-      getTodos()
-        .then(todosFromServer => {
-          setTodos(todosFromServer);
-        })
-        .finally(() => setIsLoading(false));
+  const getFilteredByStatus = () => {
+    switch (status) {
+      case 'active':
+        return todos.filter(todo => !todo.completed);
+      case 'completed':
+        return todos.filter(todo => todo.completed);
+      default:
+        return todos;
     }
-  }, [status]);
+  };
 
-  const filteredTodos = todos.filter(todo =>
+  const filteredTodos = getFilteredByStatus().filter(todo =>
     todo.title.toLowerCase().includes(query.toLowerCase()),
   );
 

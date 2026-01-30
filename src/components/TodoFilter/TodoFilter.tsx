@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export const TodoFilter: React.FC<{
-  setStatus: Dispatch<SetStateAction<'All' | 'Active' | 'Completed'>>;
+  setStatus: Dispatch<SetStateAction<'all' | 'active' | 'completed'>>;
   setQuery: Dispatch<SetStateAction<string>>;
-  query?: string;
+  query: string;
 }> = ({ setStatus, setQuery, query }) => (
   <form className="field has-addons">
     <p className="control">

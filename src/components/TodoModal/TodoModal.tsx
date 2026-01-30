@@ -9,15 +9,18 @@ export const TodoModal: React.FC<{
   onClose: () => void;
   todos: Todo[];
 }> = ({ postId, onClose, todos }) => {
-  const [modalLoading, setModalLoading] = React.useState(false);
+  const [modalLoading, setModalLoading] = React.useState(true);
   const [user, setUser] = React.useState<User | null>(null);
 
   const currentTodo = todos.find(todo => todo.id === postId);
 
+  const userId = currentTodo?.userId;
+
   useEffect(() => {
-    if (currentTodo) {
+    if (userId) {
+      setUser(null);
       setModalLoading(true);
-      getUser(currentTodo.userId)
+      getUser(userId)
         .then(setUser)
         .catch(() => {
           // Error loading user
@@ -25,12 +28,14 @@ export const TodoModal: React.FC<{
         .finally(() => {
           setModalLoading(false);
         });
+    } else {
+      setModalLoading(false);
     }
-  }, [currentTodo]);
+  }, [userId]);
 
   return (
     <div className="modal is-active" data-cy="modal">
-      <div className="modal-background" />
+      <div className="modal-background" onClick={onClose} />
 
       {modalLoading ? (
         <Loader />

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Todo } from '../../types/Todo';
+import classNames from 'classnames';
 
 export const TodoList: React.FC<{
   todos: Todo[];
@@ -35,7 +36,10 @@ export const TodoList: React.FC<{
             </td>
             <td className="is-vcentered is-expanded">
               <p
-                className={`${todo.completed ? 'has-text-success' : 'has-text-danger'}`}
+                className={classNames({
+                  'has-text-success': todo.completed,
+                  'has-text-danger': !todo.completed,
+                })}
               >
                 {todo.title}
               </p>
@@ -49,7 +53,10 @@ export const TodoList: React.FC<{
               >
                 <span className="icon">
                   <i
-                    className={`far ${postId === todo.id ? 'fa-eye-slash' : 'fa-eye'}`}
+                    className={classNames('far', {
+                      'fa-eye-slash': postId === todo.id,
+                      'fa-eye': postId !== todo.id,
+                    })}
                   />
                 </span>
               </button>
